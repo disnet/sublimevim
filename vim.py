@@ -441,11 +441,10 @@ class View(InsertView): # this is where the logic happens
 			elif char == 'j': self.key_arrow('down')
 			elif char == 'k': self.key_arrow('up')
 			elif char == 'l': self.key_arrow('right')
-
 			elif char == 'n': self.find_replace(edit, self.last_find)
 			elif char == 'N': self.find_replace(edit, self.last_find, forward=False)
 
-			elif char in ('c', 'd', 'y'):
+			elif char in ('c', 'd', 'y', 'f'):
 				self.cmd = char
 			elif char == '$':
 				for cur in sel:
@@ -479,9 +478,16 @@ class View(InsertView): # this is where the logic happens
 					self.yank = []
 					for cur in sel:
 						self.yank.append(view.substr(view.full_line(cur.b)))
+										
 
 				self.cmd = ''
 			else:
+				if self.cmd == 'f':
+					for cur in sel:
+						eol = view.line(cur.a).b
+						cur_to_eol = view.substr(sublime.Region(cur.a, eol))
+						print "looking for %s in %s" % (char, cur_to_eol)
+
 				if self.cmd in ('c', 'd', 'y'):
 					# hack to grab the partial word area for all cursors for b, e
 					if char in ('b', 'e'):
