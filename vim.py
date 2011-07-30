@@ -429,6 +429,8 @@ class View(InsertView): # this is where the logic happens
 					for cur in old:
 						sel.add(cur)
 
+			elif char == 'w':
+				view.run_command('move', {'by': 'subwords', 'forward': True})
 			elif char == 'b':
 				view.run_command('move', {'by': 'subwords', 'forward': False})
 
