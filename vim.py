@@ -411,8 +411,7 @@ class View(InsertView): # this is where the logic happens
 				mode = 'visual line'
 				
 			elif char == 'u':
-				pass
-				# view.run_command('undo')
+				view.run_command('undo')
 			
 			elif char == 'x':
 				for cur in sel:
