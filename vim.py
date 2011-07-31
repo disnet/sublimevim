@@ -461,6 +461,11 @@ class View(InsertView): # this is where the logic happens
 					self.yank.append(cur_to_eol)
 					view.erase(edit, sublime.Region(cur.a, eol))
 
+			elif char == 'Y':
+				self.yank = []
+				for cur in sel:
+					self.yank.append(view.substr(view.full_line(cur.b)))
+
 			elif char == '$':
 				for cur in sel:
 					sel.subtract(cur)
