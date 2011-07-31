@@ -359,6 +359,17 @@ class View(InsertView): # this is where the logic happens
 			elif char == 'r':
 				mode = 'replace'
 
+			elif char == 's':
+				mode = 'insert'
+				for cur in sel:
+					if cur.empty():
+						if cur.a == view.line(cur).b:
+							prev = sublime.Region(cur.a-1, cur.a-1)
+							if view.line(prev).contains(cur):
+								sel.subtract(cur)
+								sel.add(prev)
+				self.delete_char(edit)
+
 			elif char in ('O', 'o'):
 				for cur in sel:
 					line = view.line(cur.a)
