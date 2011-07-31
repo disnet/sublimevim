@@ -453,6 +453,14 @@ class View(InsertView): # this is where the logic happens
 
 			elif char in ('c', 'd', 'y', 'f'):
 				self.cmd = char
+			elif char == 'D':
+				self.yank = []
+				for cur in sel:
+					eol = view.line(cur.a).b
+					cur_to_eol = view.substr(sublime.Region(cur.a, eol))
+					self.yank.append(cur_to_eol)
+					view.erase(edit, sublime.Region(cur.a, eol))
+
 			elif char == '$':
 				for cur in sel:
 					sel.subtract(cur)
