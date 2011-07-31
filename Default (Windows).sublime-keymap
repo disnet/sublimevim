@@ -72,6 +72,9 @@
 	{ "keys": ["6"], "command": "vim_6" },
 	{ "keys": ["7"], "command": "vim_7" },
 	{ "keys": ["8"], "command": "vim_8" },
-	{ "keys": ["9"], "command": "vim_9" }
+	{ "keys": ["9"], "command": "vim_9" },
+	{ "keys": ["("], "command": "vim_(" },
+	{ "keys": [")"], "command": "vim_)" },
+	{ "keys": ["="], "command": "vim_=" }
 ]
 
