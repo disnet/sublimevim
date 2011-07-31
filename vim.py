@@ -346,6 +346,12 @@ class View(InsertView): # this is where the logic happens
 							next = sublime.Region(cur.b, cur.b)
 
 						sel.add(next)
+			if char == 'A':
+				mode = 'insert'
+				for cur in sel:
+					sel.subtract(cur)
+					next = view.line(cur.b).b
+					sel.add(sublime.Region(next, next))
 
 			elif char == 'i':
 				mode = 'insert'
@@ -394,7 +400,8 @@ class View(InsertView): # this is where the logic happens
 				mode = 'visual line'
 				
 			elif char == 'u':
-				view.run_command('undo')
+				pass
+				# view.run_command('undo')
 			
 			elif char == 'x':
 				for cur in sel:
@@ -485,8 +492,12 @@ class View(InsertView): # this is where the logic happens
 				if self.cmd == 'f':
 					for cur in sel:
 						eol = view.line(cur.a).b
-						cur_to_eol = view.substr(sublime.Region(cur.a, eol))
-						print "looking for %s in %s" % (char, cur_to_eol)
+						cur_to_eol = view.substr(sublime.Region(cur.a+1, eol))
+						index = cur_to_eol.find(char) + 1
+						if(index > 0):
+							sel.subtract(cur)
+							sel.add(sublime.Region(cur.a+index, cur.b+index))
+
 
 				if self.cmd in ('c', 'd', 'y'):
 					# hack to grab the partial word area for all cursors for b, e
@@ -671,6 +682,10 @@ for char in string.letters:
 for num in string.digits:
 	name = 'Vim_' + num
 	add_hook(name, VimChar, char=num)
+
+for sym in ["(", ")", "="]:
+	name = "Vim_" + sym
+	add_hook(name, VimChar, char=sym)
 
 for d in ('up', 'down', 'left', 'right'):
 	name = 'Vim' + d.capitalize()
