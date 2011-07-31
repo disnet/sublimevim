@@ -525,7 +525,7 @@ class View(InsertView): # this is where the logic happens
 
 				if self.cmd in ('c', 'd', 'y'):
 					# hack to grab the partial word area for all cursors for b, e
-					if char in ('b', 'e'):
+					if char in ('b', 'e', 'w'):
 						for cur in sel:
 							sel.subtract(cur)
 							sel.add(sublime.Region(cur.b, cur.b))
@@ -536,6 +536,8 @@ class View(InsertView): # this is where the logic happens
 							view.run_command('move', {'by': 'subwords', 'forward':False, 'extend':True})
 						elif char == 'e':
 							view.run_command('move', {'by': 'subword_ends', 'forward':True, 'extend':True})
+						elif char == 'w':
+							view.run_command('move', {'by': 'subword', 'forward':True, 'extend':True})
 
 						self.yank = []
 						for cur in sel:
@@ -550,6 +552,8 @@ class View(InsertView): # this is where the logic happens
 							if char == 'b':
 								view.run_command('delete_word', {'forward': False})
 							elif char == 'e':
+								view.run_command('delete_word', {'forward': True})
+							elif char == 'w':
 								view.run_command('delete_word', {'forward': True})
 
 							if cmd == 'c':
